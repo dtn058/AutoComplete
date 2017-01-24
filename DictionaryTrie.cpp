@@ -53,7 +53,8 @@ bool DictionaryTrie::find(std::string word) const
       return false;
     }else{
       curNode = curNode->charNode[ascii]; // curNode = the next char
-      if((it + 1) == word.end()){  //check if at the end of the word
+      if((it + 1) == word.end() && curNode->isWord){  
+      //check if at the end of the word
         return true;
       }
     }

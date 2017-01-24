@@ -17,6 +17,18 @@
  */
 class DictionaryTrie
 {
+
+class Node{
+  public:
+  Node();
+
+  Node* charNode[26];
+  bool isWord;
+  int frequency;
+
+ 
+};
+
 public:
 
   /* Create a new Dictionary that uses a Trie back end */
@@ -24,7 +36,7 @@ public:
 
   /* Insert a word with its frequency into the dictionary.
    * Return true if the word was inserted, and false if it
-   * was not (i.e. it was already in the dictionary or it was
+   * was not (i.eit was already in the dictionary or it was
    * invalid (empty string) */
   bool insert(std::string word, unsigned int freq);
 
@@ -49,6 +61,7 @@ public:
 
 private:
   // Add your own data members and methods here
+  Node root;
 };
 
 #endif // DICTIONARY_TRIE_H

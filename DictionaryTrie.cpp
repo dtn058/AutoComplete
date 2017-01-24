@@ -1,6 +1,14 @@
 #include "util.h"
 #include "DictionaryTrie.h"
 
+DictionaryTrie::Node::Node(void){
+  this->isWord = false;
+  this->frequency = 0;
+  for (int i = 0; i < 26; i++){
+    this->charNode[i] = NULL;
+  }
+}
+
 /* Create a new Dictionary that uses a Trie back end */
 DictionaryTrie::DictionaryTrie(){}
 
@@ -10,13 +18,46 @@ DictionaryTrie::DictionaryTrie(){}
  * invalid (empty string) */
 bool DictionaryTrie::insert(std::string word, unsigned int freq)
 {
-  return false;
+  Node *curNode = &(this->root);
+  bool retVal = false;
+  for(std::string::iterator it=word.begin(); it!=word.end(); ++it){
+  //iterate through the string
+    int ascii = *it % (int)'a';  // convert all lowercase letters to 0-25
+    if (!curNode->charNode[ascii]){ // check if Node exists at the loc
+      Node* newNode = new Node();
+      curNode->charNode[ascii] = newNode; //create a new Node and insert in arr
+      curNode = curNode->charNode[ascii]; //set curNode = new inserted node
+      retVal = true; //since had to insert a new char, a new word has been ins
+    }else{
+      curNode = curNode->charNode[ascii]; // curNode = the next char
+      if((it + 1) == word.end()){  //check if at the end of the word
+        curNode->isWord = true;  // recognize that its a word node
+        if (curNode->frequency < freq){
+          curNode->frequency = freq;  //set new frequency if larger
+        } 
+      }
+    }
+  }
+
+  return retVal;
 }
 
 /* Return true if word is in the dictionary, and false otherwise */
 bool DictionaryTrie::find(std::string word) const
 {
-  return false;
+  const Node *curNode = &(this->root);
+  for(std::string::iterator it=word.begin(); it!=word.end(); ++it){
+  //iterate through the string
+    int ascii = *it % (int)'a';  // convert all lowercase letters to 0-25
+    if (!curNode->charNode[ascii]){ // check if Node exists at the loc
+      return false;
+    }else{
+      curNode = curNode->charNode[ascii]; // curNode = the next char
+      if((it + 1) == word.end()){  //check if at the end of the word
+        return true;
+      }
+    }
+  }
 }
 
 /* Return up to num_completions of the most frequent completions

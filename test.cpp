@@ -29,7 +29,7 @@ int main(int argc, char** argv)
   DictionaryTrie dt;
   int t_bst, t_ht, tt;
 
-  words.push_back("harry");
+  words.push_back("ha rrys");
   words.push_back("sriram");
   words.push_back("cse");
   words.push_back("crucio");
@@ -68,6 +68,10 @@ int main(int argc, char** argv)
 
   cout << endl << "Re-inserting elements that were just inserted into Dictionaries..." << endl;
 
+  if(dt.find("ha rry")){
+    cout << "true" << endl;
+  }
+  
   wit = words.begin();
   wen = words.end();
   for(; wit != wen; ++wit)

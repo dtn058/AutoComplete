@@ -22,7 +22,7 @@ class Node{
   public:
   Node();
 
-  Node* charNode[26];
+  Node* charNode[27];
   bool isWord;
   int frequency;
 

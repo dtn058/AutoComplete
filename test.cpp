@@ -10,6 +10,9 @@
 #define LETTERS 26
 using namespace std;
 
+void isFalse(std::string word);
+void isTrue(std::string word);
+void testFind();
 
 int main(int argc, char** argv)
 {
@@ -29,11 +32,14 @@ int main(int argc, char** argv)
   DictionaryTrie dt;
   int t_bst, t_ht, tt;
 
-  words.push_back("ha rrys");
+  words.push_back("harrys");
   words.push_back("sriram");
   words.push_back("cse");
   words.push_back("crucio");
   words.push_back("autocomplete");
+  words.push_back("har rys");
+  words.push_back("auto complete");
+  words.push_back("har");
   
   
   cout << "Inserting into Dictionaries..." << endl;
@@ -68,10 +74,7 @@ int main(int argc, char** argv)
 
   cout << endl << "Re-inserting elements that were just inserted into Dictionaries..." << endl;
 
-  if(dt.find("ha rry")){
-    cout << "true" << endl;
-  }
-  
+ 
   wit = words.begin();
   wen = words.end();
   for(; wit != wen; ++wit)
@@ -103,6 +106,57 @@ int main(int argc, char** argv)
 
   
 /*You are supposed to add more test cases in this file */
+
+  cout << "**Testing find with our cases** \n";
   
+  DictionaryBST test_bst;
+  DictionaryHashtable test_ht;
+  DictionaryTrie test_dt;
+
+  wit = words.begin();
+  wen = words.end();
+  bool bst,hash,trie;
+  for(; wit != wen; ++wit){
+
+    cout << "Testing find on bst/ht/dt with word: " << *wit;
+    bst = test_bst.find(*wit);
+    hash = test_ht.find(*wit);
+    trie = test_dt.find(*wit);
+    
+    if(bst)
+       {
+          isFalse("Find for BST");
+        }
+      if(hash)
+        {
+          isFalse("Find for HashTable");
+        }
+      if(trie)
+        {
+          isFalse("Find for Trie");
+        }
+      if(!bst && !hash && !trie)
+        {
+          cout << "-- passed test ";
+        }
+      cout << endl;
+  }
+  if(dt.find("h")){isFalse("DictionaryTrie's find");}
+  if(dt.find("ha")){isFalse("DictionaryTrie's find");}
+  if(dt.find("harr")){isFalse("DictionaryTrie's find");}
+  if(dt.find("harrys ")){isFalse("DictionaryTrie's find");}    
+
+  // want to make it so you can't put in special characters (ascii <95 etc)
   return 0;
 }
+
+void isFalse(std::string word){
+ cout << "The following method is NOT WORKING: " << word;
+}
+
+void isTrue(std::string word){
+ cout << "The following method is TRUE: " << word << endl;
+}
+
+
+

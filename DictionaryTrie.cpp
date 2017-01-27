@@ -45,7 +45,10 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq)
     }else{
       curNode = curNode->charNode[ascii]; // curNode = the next char
       if(i == (word.size()-1)){  //check if at the end of the word
-        curNode->isWord = true;  // recognize that its a word node
+        if (!curNode->isWord){
+         curNode->isWord = true;  // recognize that its a word node
+         retVal = true;
+        }
         if (curNode->frequency < freq){
           curNode->frequency = freq;  //set new frequency if larger
         } 

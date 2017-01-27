@@ -2,7 +2,10 @@
 #include "DictionaryTrie.h"
 
 using namespace std;
-
+/**
+ * Constructor for the Node class
+ * sets everything to false, 0, and null
+ */
 DictionaryTrie::Node::Node(void){
   this->isWord = false;
   this->frequency = 0;
@@ -42,9 +45,7 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq)
     }else{
       curNode = curNode->charNode[ascii]; // curNode = the next char
       if(i == (word.size()-1)){  //check if at the end of the word
-        //cout << "sets boolean " << word[i] <<  endl;
         curNode->isWord = true;  // recognize that its a word node
-        //cout << "isWord " << curNode->isWord << endl;
         if (curNode->frequency < freq){
           curNode->frequency = freq;  //set new frequency if larger
         } 
@@ -61,25 +62,16 @@ bool DictionaryTrie::find(std::string word) const
   const Node *curNode = &(this->root);
   for(std::string::size_type i = 0; i < word.size(); ++i){
   //iterate through the string
-   // cout << "letter is: " << word[i] << endl;
     int ascii = word[i] % (int)'a';  // convert all lowercase letters to 0-25
     if( ascii == 32 ) {
       ascii = 26;
-      //cout << "this is working" << endl;
     }
-    //cout << "ascii is: " << word[i] << endl;
     if (!curNode->charNode[ascii]){ // check if Node exists at the loc
-      //cout << "returning false" << endl;
       return false;
     }else{
       curNode = curNode->charNode[ascii]; // curNode = the next char
-      //cout << "else statement runs" << endl;
-      //cout << "i: " << i << endl;
-      //cout << "word.size()-1 = " << word.size()-1 << endl;
-      //cout << "curNode->isWord " << curNode->isWord << endl;
       if( i == (word.size()-1) && curNode->isWord){  
       //check if at the end of the word
-        //cout << "should print true" << endl;
         return true;
       }
     }
@@ -106,17 +98,25 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
 /* Destructor */
 DictionaryTrie::~DictionaryTrie(){
 
-  DFSDelete(&(this->root));
+  DFSDelete(&(this->root)); // call helper
 }
 
+
+/**
+ * Helper method for the destructor
+ * recursively deletes all the nodes in trie using depth first search
+ * Parameter: next node to check or delete
+ */
 void DictionaryTrie::DFSDelete(Node* n){
 
-   for(int i = 0; i<27; i++){
+   for(int i = 0; i<27; i++){ 
+   // iterate through Node aray and check if there are still nodes
      if(n->charNode[i]){
-        DFSDelete((n->charNode[i]));
+        DFSDelete((n->charNode[i])); // recursively call until reach final node
      }
     }
+   //delete if it is not the root node. Prevents excessive frees
    if (n != &this->root){
-    delete(n);
+    delete(n); 
    }
   }

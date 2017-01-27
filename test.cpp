@@ -12,7 +12,6 @@
 using namespace std;
 
 void isFalse(std::string word);
-void isTrue(std::string word);
 void testFind(vector<std::string> words);
 
 int main(int argc, char** argv)
@@ -114,7 +113,7 @@ int main(int argc, char** argv)
 
   
 /*You are supposed to add more test cases in this file */
-
+  //test find method
   testFind(words);
 
   cout << "Trying find on variations of 'harry' (h, ha, harr, harrys)" << endl;
@@ -129,14 +128,15 @@ int main(int argc, char** argv)
   cout << endl;
   cout << "READING IN DICTIONARIES" << endl;
 
+  // open stream
   ifstream in;
   in.open(argv[1]);
 
-  if (!in.is_open()){
+  if (!in.is_open()){ // check if file is opening
     cout << "Invalid input file. No file was opened" << endl;
     return -1;
   }
-  else{
+  else{  
     vector<std::string> vect;
     DictionaryTrie trie;
     DictionaryBST bst;
@@ -148,21 +148,22 @@ int main(int argc, char** argv)
     
     cout << "vector: " << endl;
     for (std::string a: vect){
-      cout << a << endl;
+      cout << a << endl; // print out all words to check if vector is correct
     }
-    
+    // load into the BST
     Utils::load_dict(bst, in);
     in.close();
     in.open(argv[1]);
-    
+    // load int the Hashtable
     Utils::load_dict(hash, in);
     in.close();
     in.open(argv[1]);
-    
+    //load into the Trie
     Utils::load_dict(trie, in);
     in.close();
+    // check if trie is working
     for (std::string a: vect){
-      if(!bst.find(a)){
+      if(!trie.find(a)){
         cout << "word messed up: " << a << endl;
       }
       

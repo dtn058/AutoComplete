@@ -16,7 +16,7 @@ bool DictionaryBST::insert(std::string word)
 /* Return true if word is in the dictionary, and false otherwise */
 bool DictionaryBST::find(std::string word) const
 {
-  if (set.find(word) == set.end()){
+  if (set.find(word) == set.end()){ //check if iterator is true
     return false;
   }
   else{ return true; }

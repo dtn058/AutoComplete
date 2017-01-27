@@ -34,7 +34,7 @@ public:
 
 private:
   // Add your own data members and methods here
-
+  //unordered set is the hash table
   std::unordered_set<std::string> hashSet;
 };
 

@@ -13,7 +13,7 @@ bool DictionaryHashtable::insert(std::string word)
 /* Return true if word is in the dictionary, and false otherwise */
 bool DictionaryHashtable::find(std::string word) const
 {
-  if (hashSet.find(word) == hashSet.end()){
+  if (hashSet.find(word) == hashSet.end()){ // check if iterator is null
     return false;
   }
   return true;

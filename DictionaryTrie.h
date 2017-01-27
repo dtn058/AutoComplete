@@ -22,9 +22,9 @@ class Node{
   public:
   Node();
 
-  Node* charNode[27];
-  bool isWord;
-  int frequency;
+  Node* charNode[27]; // spaces for alphabet + " "
+  bool isWord; // check if node is a word node
+  int frequency; // check the frequency of the word
 
  
 };
@@ -61,8 +61,9 @@ public:
 
 private:
   // Add your own data members and methods here
+  // root Node of the trie
   Node root;
-
+  //destructor helper method
   void DFSDelete(Node *n);
 };
 

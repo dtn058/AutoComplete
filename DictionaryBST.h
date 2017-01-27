@@ -34,6 +34,7 @@ public:
 
 private:
   // Add your own data members and methods here
+  // create a set to store strings and use as BST
   std::set<std::string> set;
 
 };

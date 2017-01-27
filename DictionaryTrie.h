@@ -62,6 +62,8 @@ public:
 private:
   // Add your own data members and methods here
   Node root;
+
+  void DFSDelete(Node *n);
 };
 
 #endif // DICTIONARY_TRIE_H

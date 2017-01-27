@@ -69,7 +69,7 @@ bool DictionaryTrie::find(std::string word) const
     }
     //cout << "ascii is: " << word[i] << endl;
     if (!curNode->charNode[ascii]){ // check if Node exists at the loc
-      cout << "returning false" << endl;
+      //cout << "returning false" << endl;
       return false;
     }else{
       curNode = curNode->charNode[ascii]; // curNode = the next char
@@ -104,4 +104,19 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
 }
 
 /* Destructor */
-DictionaryTrie::~DictionaryTrie(){}
+DictionaryTrie::~DictionaryTrie(){
+
+  DFSDelete(&(this->root));
+}
+
+void DictionaryTrie::DFSDelete(Node* n){
+
+   for(int i = 0; i<27; i++){
+     if(n->charNode[i]){
+        DFSDelete((n->charNode[i]));
+     }
+    }
+   if (n != &this->root){
+    delete(n);
+   }
+  }

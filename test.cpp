@@ -141,10 +141,15 @@ int main(int argc, char** argv)
         }
       cout << endl;
   }
+
+  cout << endl;
+
+  cout << "Trying find on variations of 'harry' (h, ha, harr, harrys)" << endl;
   if(dt.find("h")){isFalse("DictionaryTrie's find");}
   if(dt.find("ha")){isFalse("DictionaryTrie's find");}
   if(dt.find("harr")){isFalse("DictionaryTrie's find");}
-  if(dt.find("harrys ")){isFalse("DictionaryTrie's find");}    
+  if(dt.find("harrys ")){isFalse("DictionaryTrie's find");}
+  cout << "Variations are not in the trie" << endl; 
 
   // want to make it so you can't put in special characters (ascii <95 etc)
   return 0;
@@ -154,9 +159,7 @@ void isFalse(std::string word){
  cout << "The following method is NOT WORKING: " << word;
 }
 
-void isTrue(std::string word){
- cout << "The following method is TRUE: " << word << endl;
-}
+
 
 
 

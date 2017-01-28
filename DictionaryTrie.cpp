@@ -26,7 +26,7 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq)
   Node *curNode = &(this->root);
   bool retVal = false;
   for(std::string::size_type i=0; i < word.size(); i++){
-  //iterate through the string
+    //iterate through the string
     int ascii = word[i] % (int)'a';  // convert all lowercase letters to 0-25
     if( ascii == 32 ) {
       ascii = 26;
@@ -46,8 +46,8 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq)
       curNode = curNode->charNode[ascii]; // curNode = the next char
       if(i == (word.size()-1)){  //check if at the end of the word
         if (!curNode->isWord){
-         curNode->isWord = true;  // recognize that its a word node
-         retVal = true;
+          curNode->isWord = true;  // recognize that its a word node
+          retVal = true;
         }
         if (curNode->frequency < freq){
           curNode->frequency = freq;  //set new frequency if larger
@@ -64,7 +64,7 @@ bool DictionaryTrie::find(std::string word) const
 {
   const Node *curNode = &(this->root);
   for(std::string::size_type i = 0; i < word.size(); ++i){
-  //iterate through the string
+    //iterate through the string
     int ascii = word[i] % (int)'a';  // convert all lowercase letters to 0-25
     if( ascii == 32 ) {
       ascii = 26;
@@ -74,7 +74,7 @@ bool DictionaryTrie::find(std::string word) const
     }else{
       curNode = curNode->charNode[ascii]; // curNode = the next char
       if( i == (word.size()-1) && curNode->isWord){  
-      //check if at the end of the word
+        //check if at the end of the word
         return true;
       }
     }
@@ -94,8 +94,58 @@ bool DictionaryTrie::find(std::string word) const
  */
 std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, unsigned int num_completions)
 {
+  Node *curNode = &(this->root);
   std::vector<std::string> words;
+  std::vector<std::string> finalres;
+  std::string arbword;
+  std::string::size_type i = 0;
+  for(;i < prefix.size(); ++i){
+    //iterate through the string
+    int ascii = prefix[i] % (int)'a';  // convert all lowercase letters to 0-25
+    if( ascii == 32 ) {
+      ascii = 26;
+    }
+
+    if (!curNode->charNode[ascii]){ // check if Node exists at the loc
+      // that means prefix isn't in trie
+    }else{
+      curNode = curNode->charNode[ascii];
+      if(i == prefix.size()-1){
+
+        cout << "is this node isword true?: " << curNode->isWord << endl;
+        DFSPredict(curNode, arbword, prefix[i], words);
+
+      }
+
+    }
+
+  }
+
+  cout << "Size of finalres" << words.size() << endl;
+    for (std::string a: words){
+      cout << "Elements are: " << a << endl; // print out all words to check if vector is correct
+    }
+
   return words;
+}
+
+void DictionaryTrie::DFSPredict(Node* n, std::string &arbword, char letter, std::vector<std::string> &words){
+
+  if(n->isWord){
+    words.push_back(arbword);
+  }
+
+  arbword.push_back(letter);
+  for(int i = 0; i<27; i++){ 
+    // iterate through Node aray and check if there are still nodes
+    char letter = (i+'a');
+    if(n->charNode[i]){
+    //  if(i == 26){
+     //   letter = " ";
+    //  }
+      DFSPredict(n->charNode[i], arbword, char(i+'a'), words); // recursively call until reach final node
+    }
+  }
 }
 
 /* Destructor */
@@ -112,14 +162,14 @@ DictionaryTrie::~DictionaryTrie(){
  */
 void DictionaryTrie::DFSDelete(Node* n){
 
-   for(int i = 0; i<27; i++){ 
-   // iterate through Node aray and check if there are still nodes
-     if(n->charNode[i]){
-        DFSDelete((n->charNode[i])); // recursively call until reach final node
-     }
+  for(int i = 0; i<27; i++){ 
+    // iterate through Node aray and check if there are still nodes
+    if(n->charNode[i]){
+      DFSDelete((n->charNode[i])); // recursively call until reach final node
     }
-   //delete if it is not the root node. Prevents excessive frees
-   if (n != &this->root){
-    delete(n); 
-   }
   }
+  //delete if it is not the root node. Prevents excessive frees
+  if (n != &this->root){
+    delete(n); 
+  }
+}

@@ -65,6 +65,7 @@ private:
   Node root;
   //destructor helper method
   void DFSDelete(Node *n);
+  void DFSPredict(Node *n, std::string &arbword, char letter, std::vector<std::string> &words);
 };
 
 #endif // DICTIONARY_TRIE_H

@@ -142,7 +142,7 @@ int main(int argc, char** argv)
     DictionaryBST bst;
     DictionaryHashtable hash;
 
-    Utils::load_vector(vect, in);
+    Utils::load_vector(vect, in, 5);
     in.close();
     in.open(argv[1]);
     
@@ -150,6 +150,7 @@ int main(int argc, char** argv)
     for (std::string a: vect){
       cout << a << endl; // print out all words to check if vector is correct
     }
+    /*
     // load into the BST
     Utils::load_dict(bst, in);
     in.close();
@@ -158,9 +159,13 @@ int main(int argc, char** argv)
     Utils::load_dict(hash, in);
     in.close();
     in.open(argv[1]);
+    */
     //load into the Trie
-    Utils::load_dict(trie, in);
+    Utils::load_dict(trie, in,5);
     in.close();
+
+    trie.predictCompletions("a",2);
+    /*
     // check if trie is working
     for (std::string a: vect){
       if(!trie.find(a)){
@@ -168,6 +173,7 @@ int main(int argc, char** argv)
       }
       
     }
+    */
 
   }
   // want to make it so you can't put in special characters (ascii <95 etc)

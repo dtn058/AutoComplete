@@ -99,6 +99,16 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
   std::vector<std::string> finalres;
   std::string arbword;
   std::string::size_type i = 0;
+  std::vector<std::string> empty;
+
+  if(num_completions == 0){
+    return empty;
+  }
+
+  if(!find(prefix)){
+    return empty;
+  }
+
   for(;i < prefix.size(); ++i){
     //iterate through the string
     int ascii = prefix[i] % (int)'a';  // convert all lowercase letters to 0-25
@@ -131,19 +141,22 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
 
 void DictionaryTrie::DFSPredict(Node* n, std::string &arbword, char letter, std::vector<std::string> &words){
 
+   arbword.push_back(letter);
   if(n->isWord){
     words.push_back(arbword);
   }
 
-  arbword.push_back(letter);
   for(int i = 0; i<27; i++){ 
     // iterate through Node aray and check if there are still nodes
     char letter = (i+'a');
+    if(letter == 123){
+      letter = (char)32;
+    }
     if(n->charNode[i]){
     //  if(i == 26){
      //   letter = " ";
     //  }
-      DFSPredict(n->charNode[i], arbword, char(i+'a'), words); // recursively call until reach final node
+      DFSPredict(n->charNode[i], arbword, letter, words); // recursively call until reach final node
     }
   }
 }

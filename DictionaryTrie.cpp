@@ -95,8 +95,7 @@ bool DictionaryTrie::find(std::string word) const
 std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, unsigned int num_completions)
 {
   Node *curNode = &(this->root);
-  std::vector<std::string> words;
-  std::vector<std::string> finalres;
+  std::vector<std::pair<std::string, int>> words;
   std::string arbword;
   std::string::size_type i = 0;
   std::vector<std::string> empty;
@@ -122,7 +121,6 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
       curNode = curNode->charNode[ascii];
       if(i == prefix.size()-1){
 
-        cout << "is this node isword true?: " << curNode->isWord << endl;
         DFSPredict(curNode, arbword, prefix[i], words);
 
       }
@@ -131,32 +129,33 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
 
   }
 
-  cout << "Size of finalres" << words.size() << endl;
-    for (std::string a: words){
-      cout << "Elements are: " << a << endl; // print out all words to check if vector is correct
+  int counter = 0;
+  cout << "Size of words is: " << words.size() << endl;
+    for (int i = 0; i < words.size(); i++){
+      cout << "#" << counter << ": Element is: |" << words[i].first << "| and its frequency is: " << words[i].second << endl; 
+        // print out all words to check if vector is correct
+      counter++;
     }
 
-  return words;
+  return empty;
 }
 
-void DictionaryTrie::DFSPredict(Node* n, std::string &arbword, char letter, std::vector<std::string> &words){
+void DictionaryTrie::DFSPredict(Node* n, std::string narbword, char letter, std::vector<std::pair<std::string, int>> &words){
 
-   arbword.push_back(letter);
+   narbword.push_back(letter);
   if(n->isWord){
-    words.push_back(arbword);
+    words.push_back(std::pair<std::string, int>(narbword, n->frequency));
   }
 
   for(int i = 0; i<27; i++){ 
     // iterate through Node aray and check if there are still nodes
     char letter = (i+'a');
-    if(letter == 123){
+    if(i == 26){
       letter = (char)32;
     }
     if(n->charNode[i]){
-    //  if(i == 26){
-     //   letter = " ";
-    //  }
-      DFSPredict(n->charNode[i], arbword, letter, words); // recursively call until reach final node
+
+      DFSPredict(n->charNode[i], narbword, letter, words); // recursively call until reach final node
     }
   }
 }

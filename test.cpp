@@ -161,10 +161,10 @@ int main(int argc, char** argv)
     in.open(argv[1]);
     */
     //load into the Trie
-    Utils::load_dict(trie, in,5);
+    Utils::load_dict(trie, in,25);
     in.close();
 
-    trie.predictCompletions("a",2);
+    trie.predictCompletions("a",5);
     /*
     // check if trie is working
     for (std::string a: vect){
